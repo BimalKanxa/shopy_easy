@@ -3,6 +3,7 @@ import Search from '@mui/icons-material/Search';
 import Badge from '@mui/material/Badge';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { mobile } from '../responsive'
+import { Link } from "react-router-dom";
 
 const Container = styled.div`
         height: 60px;
@@ -98,8 +99,9 @@ const Navbar = () => {
                                         <MenuItem>Register</MenuItem>
                                         <MenuItem>Login</MenuItem>
                                         <MenuItem>
-                                                <Badge badgeContent={4} color="primary">
-                                                        <ShoppingCartIcon />
+                                                <Badge badgeContent={2} color="primary">
+                                                        {/* <ShoppingCartIcon /> */}
+                                                   <Link to="/cart" style={{color: "black"}}> <ShoppingCartIcon /></Link>
                                                 </Badge>
                                         </MenuItem>
                                 </Right>

@@ -6,6 +6,10 @@ import Navbar from "../components/Navbar";
 import RemoveIcon from '@mui/icons-material/Remove';
 import AddIcon from '@mui/icons-material/Add';
 import { mobile } from "../responsive";
+import { useDispatch, useSelector} from "react-redux";
+import { bindActionCreators } from "redux";
+import { actionCreators } from "../redux/index";
+import { useState } from "react";
 
 
 
@@ -174,6 +178,11 @@ const Button = styled.button`
 
 
 const Cart = () => {
+    const amount = useSelector(state => state.value)
+    const dispatch =  useDispatch()
+    const {IncrementCart, DecrementCart} = bindActionCreators(actionCreators, dispatch);
+    const [count, setCount] = useState(0);
+    const [count1, setCount1] = useState(0);
     return (
         <Container>
             <Navbar />
@@ -204,12 +213,12 @@ const Cart = () => {
                                 </Details>
                             </ProductDetail>
                             <PriceDetail>
-                                <ProductAmountContainer>
-                                    <RemoveIcon />
-                                    <ProductAmount>2</ProductAmount>
-                                    <AddIcon />
+                                <ProductAmountContainer >
+                                    <RemoveIcon onClick={()=>{DecrementCart(10);setCount(count-1)}} />
+                                    <ProductAmount>{count}</ProductAmount>
+                                    <AddIcon onClick={()=>{IncrementCart(10);setCount(count+1)}} />
                                 </ProductAmountContainer>
-                                <ProductPrice>$ 40</ProductPrice>
+                                <ProductPrice>$ 10</ProductPrice>
                             </PriceDetail>
                         </Product>
                         <Hr/>
@@ -226,11 +235,11 @@ const Cart = () => {
                             </ProductDetail>
                             <PriceDetail>
                                 <ProductAmountContainer>
-                                    <RemoveIcon />
-                                    <ProductAmount>1</ProductAmount>
-                                    <AddIcon />
+                                    <RemoveIcon onClick={()=>{DecrementCart(20); setCount1(count1 -1)}} />
+                                    <ProductAmount>{count1}</ProductAmount>
+                                    <AddIcon onClick={()=>{IncrementCart(20); setCount1(count1 +1)}} />
                                 </ProductAmountContainer>
-                                <ProductPrice>$ 30</ProductPrice>
+                                <ProductPrice>$ 20</ProductPrice>
                             </PriceDetail>
                         </Product>
                     </Info>
@@ -240,7 +249,7 @@ const Cart = () => {
 
                         <SummaryItem>
                             <SummaryItemText>Subtotal: </SummaryItemText>
-                            <SummaryItemPrice>$ 70</SummaryItemPrice>
+                            <SummaryItemPrice>$ {amount}</SummaryItemPrice>
                         </SummaryItem>
 
                         <SummaryItem>
@@ -254,8 +263,9 @@ const Cart = () => {
                         </SummaryItem>
 
                         <SummaryItem  type="total">
-                            <SummaryItemText><b>Total:</b> </SummaryItemText>
-                            <SummaryItemPrice>$ 70</SummaryItemPrice>
+                            <SummaryItemText><b>Total: </b> </SummaryItemText>
+                            {/* <SummaryItemPrice>$ 70</SummaryItemPrice> */}
+                            <SummaryItemPrice>$ {amount}</SummaryItemPrice>
                         </SummaryItem>
 
                                 <Button>CHECKOUT NOW!</Button>
